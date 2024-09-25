@@ -17,6 +17,7 @@ namespace API
             {
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddCors();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -24,6 +25,8 @@ namespace API
 
 
             var app = builder.Build();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -33,7 +36,7 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
+                
             app.UseAuthorization();
 
 
